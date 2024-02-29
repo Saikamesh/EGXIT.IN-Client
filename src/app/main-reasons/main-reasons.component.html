@@ -1,0 +1,137 @@
+<div>
+  <form
+    [formGroup]="mainReasonsForm"
+    (submit)="onSubmit()"
+    class="px-2 max-w-xl mx-auto mt-10"
+  >
+    <div>
+      <h3 class="py-2 text-lg leading-4 font-semibold">
+        What was your position upon departure from college ?
+      </h3>
+      <div class="ml-1 font-medium">
+        <label for="radio1" class="py-1">
+          <input
+            formControlName="position"
+            type="radio"
+            id="radio1"
+            (change)="hideTextField()"
+            value="Full Time Exempt Employee"
+            required
+          />
+          Full Time Exempt Employee
+        </label>
+        <br />
+        <label for="radio2" class="py-1">
+          <input
+            formControlName="position"
+            type="radio"
+            id="radio2"
+            (change)="hideTextField()"
+            value="Full Time Hourly Employee"
+            required
+          />
+          Full Time Hourly Employee
+        </label>
+        <br />
+        <label for="radio3" class="py-1">
+          <input
+            formControlName="position"
+            type="radio"
+            id="radio3"
+            (change)="hideTextField()"
+            value="Part Time Hourly Employee"
+            required
+          />
+          Part Time Hourly Employee
+        </label>
+        <br />
+        <label for="radio4" class="py-1">
+          <input
+            formControlName="position"
+            type="radio"
+            (click)="showTextField()"
+            id="radio4"
+            value="OT"
+            required
+          />
+          Other
+        </label>
+        <br />
+        <label for="other" [hidden]="!isOther">
+          <input
+            formControlName="position"
+            type="text"
+            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block min-w-0.5 max-h-8 p-2.5"
+            id="other"
+            placeholder="enter your position"
+            required
+          />
+        </label>
+      </div>
+      <br />
+    </div>
+    <div>
+      <h3 class="py-2 text-lg leading-4 font-semibold">
+        What influenced your decision to leave the college?
+      </h3>
+      <!-- @for(reason of reasons; track reasons; let id=$index){ -->
+      <div
+        class="ml-1 py-1 font-medium"
+        *ngFor="let reason of reasons; let id = index"
+      >
+        <label for="reason{{ id }}">
+          <input
+            (ngModelChange)="getValues({reason})"
+            formControlName="influences"
+            type="checkbox"
+            id="reason{{ id }}"
+            [value]="reason"
+            required
+          />
+          {{ reason }} </label
+        ><br />
+      </div>
+      <!-- } -->
+    </div>
+    <br />
+    <div>
+      <h3 class="py-2 text-lg leading-6 font-semibold">
+        {{ additionalReflections }}
+      </h3>
+      <label
+        for="message"
+        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+        >Your message</label
+      >
+      <textarea
+        formControlName="additionalReflections"
+        id="message"
+        rows="4"
+        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500"
+        placeholder="Write your thoughts here..."
+      ></textarea>
+    </div>
+    <br />
+    <div class="flex justify-between">
+      <a
+        ><button
+          class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          type="button"
+          (click)="goBack()"
+        >
+          Back
+        </button></a
+      >
+      <!-- routerLink="/step2 -->
+      <a
+        ><button
+          class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
+          type="submit"
+        >
+          Next
+        </button></a
+      >
+    </div>
+  </form>
+  <br />
+</div>
