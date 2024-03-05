@@ -78,13 +78,11 @@ export class AdditionalThoughtsComponent {
     CollegeExpDesc: new FormControl<string>('', []),
     InPersonInterview: new FormControl<string>('', [Validators.required]),
     FullName: new FormControl<string>('', [
-      Validators.required,
       Validators.pattern('^[a-zA-Z]+(?: [a-zA-Z]+)*$'),
       Validators.maxLength(20),
     ]),
-    Email: new FormControl<string>('', [Validators.required, Validators.email]),
+    Email: new FormControl<string>('', [Validators.email]),
     Phone: new FormControl<number | null | undefined>(null, [
-      Validators.required,
       Validators.maxLength(10),
       Validators.minLength(10),
       Validators.pattern('^[0-9]*$'),
@@ -105,11 +103,3 @@ export class AdditionalThoughtsComponent {
     }
   }
 }
-
-// class AdditionalResponse(models.Model):
-//     WorkExpDesc: str = models.CharField(max_length=500, null=True)
-//     CollegeExpDesc: str = models.CharField(max_length=500, null=True)
-//     InPersonInterview: str = models.CharField(max_length=3)
-//     FullName: str = models.CharField(max_length=50, null=True)
-//     Email: str = models.EmailField(max_length=50, null=True)
-//     Phone: str = models.IntegerField(max_length=10, null=True)

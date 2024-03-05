@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { DataBridgeService } from '../data-bridge.service';
+import { DataBridgeService } from '../services/data-bridge.service';
 @Component({
   selector: 'app-home',
   standalone: true,

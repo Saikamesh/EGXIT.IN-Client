@@ -40,6 +40,7 @@ export class MainReasonsComponent {
   additionalReflections: string =
     'We are interested in learning more about your reasons for leaving. Please provide any additional reflections or comments you have about your decision to leave the college.';
 
+  hasError: boolean = false;
   isOther: boolean = false;
   selectedReasons: string[] = [];
 
@@ -85,12 +86,8 @@ export class MainReasonsComponent {
       console.log((this.selectedReasons)); 
       this.router.navigate(['/step2']);
     }else{
+      this.hasError = true;
       console.log('Form is invalid');
     }
   }
 }
-
-// class MainReasons(models.Model):
-//     EmployementType: str = models.CharField(max_length=30)
-//     influence: str = models.JSONField(default=list)
-//     additional_reflection: str = models.CharField(max_length=500, null=True)
