@@ -3,12 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import {
-  ReactiveFormsModule,
-  FormGroup,
-  FormControl,
-  Validators,
-} from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-main-reasons',
@@ -58,35 +53,35 @@ export class MainReasonsComponent {
 
   mainReasonsForm = new FormGroup({
     position: new FormControl('', [Validators.required]),
+    otherPosition: new FormControl('', [Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+(?: [a-zA-Z]+)*$')]),
     influence: new FormControl('', [Validators.required]),
-    additional_reflection: new FormControl(''),
+    additional_reflection: new FormControl('', [Validators.pattern('^[a-zA-Z0-9 ]*$')]),
   });
 
   getValues(rs: { reason: string }) {
     let reason: string = rs['reason'];
     if (this.selectedReasons.includes(reason)) {
-      this.selectedReasons = this.selectedReasons.filter(
-        (item) => item !== reason
-      );
+      this.selectedReasons = this.selectedReasons.filter((item) => item !== reason);
     } else {
       this.selectedReasons.push(reason);
     }
   }
 
   onSubmit(): void {
-    if(this.mainReasonsForm.valid){
+    if (this.mainReasonsForm.valid && (!this.isOther || this.mainReasonsForm.controls.otherPosition.value)) {
       console.log('Submit working');
-      console.log(typeof(this.mainReasonsForm.value.position));
-      console.log(typeof(this.selectedReasons));
-      console.log(typeof(this.mainReasonsForm.value.additional_reflection));
-      
+      console.log(typeof this.mainReasonsForm.value.position);
+      console.log(typeof this.selectedReasons);
+      console.log(typeof this.mainReasonsForm.value.additional_reflection);
 
-      console.log((this.mainReasonsForm.value.position));
-      console.log((this.mainReasonsForm.value.additional_reflection));
-      console.log((this.selectedReasons)); 
+      console.log(this.mainReasonsForm.value.position);
+      console.log(this.mainReasonsForm.value.additional_reflection);
+      console.log(this.selectedReasons);
       this.router.navigate(['/step2']);
-    }else{
+    } else {
       this.hasError = true;
+      console.log(this.mainReasonsForm.value); // log the form value
+      console.log(this.mainReasonsForm.controls);
       console.log('Form is invalid');
     }
   }

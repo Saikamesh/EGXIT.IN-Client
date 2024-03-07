@@ -1,4 +1,9 @@
 <div class="px-2 max-w-4xl mx-auto mt-10">
+  <p class="font-medium">
+    The below set of items ask you about your overall work experience. Please rate the extent to which the college met
+    your expectations.
+  </p>
+  <br />
   <form [formGroup]="overallWorkExperienceForm" (submit)="onSubmit()">
     <div>
       @for(item of formItems; track item){
@@ -10,7 +15,6 @@
         @for(rating of ratings; track rating){
         <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r">
           <div class="flex items-center ps-3">
-            <!-- [name]="'rating-' + items" -->
             <input
               class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500"
               formControlName="{{ item.key }}"

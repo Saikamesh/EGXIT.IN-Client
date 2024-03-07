@@ -1,11 +1,7 @@
 <div class="px-2 max-w-2xl mx-auto mt-10">
   <form [formGroup]="additionalThoughtsForm" (submit)="onSubmit()">
     <div>
-      <label
-        class="py-2 text-lg leading-4 font-semibold"
-        for="workexperience"
-        >{{ workExperience }}</label
-      >
+      <label class="py-2 text-lg leading-4 font-semibold" for="workexperience">{{ workExperience }}</label>
       <br /><br />
       <textarea
         formControlName="WorkExpDesc"
@@ -17,9 +13,7 @@
     </div>
     <br /><br />
     <div>
-      <label class="py-2 text-lg leading-4 font-semibold" for="collegeexperience">{{
-        collegeExperience
-      }}</label>
+      <label class="py-2 text-lg leading-4 font-semibold" for="collegeexperience">{{ collegeExperience }}</label>
       <br /><br />
       <textarea
         formControlName="CollegeExpDesc"
@@ -60,62 +54,51 @@
     <div class="mt-6" [hidden]="offlineInterview">
       <h3 class="font-semibold pb-4">{{ participation }}</h3>
       <div class="mb-4">
-        <label
-          for="fullname"
-          class="block mb-2 text-sm font-normal text-gray-900"
-          >
+        <label for="Fullname" class="block mb-2 text-sm font-normal text-gray-900">Full Name</label>
         <input
           formControlName="FullName"
           type="text"
-          id="fullname"
+          id="Fullname"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Full Name"
-          />
-        Full Name</label>
+        />
       </div>
       <div class="mb-4">
-        <label for="email" class="block mb-2 text-sm font-normal text-gray-900"
-          >Email</label
-        >
+        <label for="Email" class="block mb-2 text-sm font-normal text-gray-900">Email</label>
         <input
           formControlName="Email"
           type="email"
-          id="email"
+          id="Email"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-          placeholder="email"
+          placeholder="example@email.com"
           inputmode="email"
         />
       </div>
       <div>
-        <label for="phone" class="block mb-2 text-sm font-normal text-gray-900"
-          >Phone</label
-        >
+        <label for="Phone" class="block mb-2 text-sm font-normal text-gray-900">Phone</label>
         <input
           formControlName="Phone"
           type="number"
-          id="phone"
-          class=" bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+          id="Phone"
+          class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="Phone no."
           inputmode="numeric"
+          maxlength="10"
         />
       </div>
     </div>
     <div class="flex justify-between mt-6">
-      <a
-        ><button
-          class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
-          type="button"
-          (click)="goBack()"
-        >
-          Back
-        </button></a
-      >
       <button
         class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2"
         type="submit"
       >
         Submit
       </button>
+      @if (hasError) {
+      <div>
+        <p class="text-red-600 text-sm text-justify italic">Please fill out all the fields</p>
+      </div>
+      }
     </div>
   </form>
 </div>

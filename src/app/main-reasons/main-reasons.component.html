@@ -57,14 +57,13 @@
           Other
         </label>
         <br />
-        <label for="other" [hidden]="!isOther">
+        <label for="otherPosition" [hidden]="!isOther">
           <input
-            formControlName="position"
+            formControlName="otherPosition"
             type="text"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block min-w-0.5 max-h-8 p-2.5"
-            id="other"
-            placeholder="enter your position"
-            required
+            id="otherPosition"
+            placeholder="Enter your position"
           />
         </label>
       </div>
@@ -74,7 +73,6 @@
       <h3 class="py-2 text-lg leading-4 font-semibold">
        * What influenced your decision to leave the college?
       </h3>
-      <!-- @for(reason of reasons; track reasons; let id=$index){ -->
       <div
         class="ml-1 py-1 font-medium"
         *ngFor="let reason of reasons; let id = index"
@@ -91,7 +89,6 @@
           {{ reason }} </label
         ><br />
       </div>
-      <!-- } -->
     </div>
     <br />
     <div>
