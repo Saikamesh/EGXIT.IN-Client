@@ -1,8 +1,8 @@
 export interface Thoughts {
-  workExperience: string | undefined | null;
-  collegeExperience: string | undefined;
-  inPersonInterview: string;
-  fullName: string | undefined;
-  email: string | undefined;
-  phone: number | undefined;
+  WorkExpDesc: string | null;
+  CollegeExpDesc: string | null;
+  InPersonInterview: string;
+  FullName: string | null;
+  Email: string | null;
+  Phone: string | null;
 }
