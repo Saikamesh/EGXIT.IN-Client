@@ -1,13 +1,9 @@
 import { Component } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
-import {
-  ReactiveFormsModule,
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
-} from '@angular/forms';
+import { ReactiveFormsModule, FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
+import { DataBridgeService } from '../services/data-bridge.service';
+import { Experience } from '../models/experience';
 @Component({
   selector: 'app-overall-work-experience',
   standalone: true,
@@ -16,7 +12,7 @@ import {
   styleUrl: './overall-work-experience.component.css',
 })
 export class OverallWorkExperienceComponent {
-  constructor(private location: Location, private router: Router) {}
+  constructor(private location: Location, private router: Router, private dataBridge: DataBridgeService) {}
 
   hasError: boolean = false;
 
@@ -77,13 +73,7 @@ export class OverallWorkExperienceComponent {
     { key: 'Other_College_Benefits', value: 'Other college benifits' },
   ];
 
-  ratings: string[] = [
-    'Strongly Disagree',
-    'Disagree',
-    'Neutral',
-    'Agree',
-    'Strongly Agree',
-  ];
+  ratings: string[] = ['Strongly Disagree', 'Disagree', 'Neutral', 'Agree', 'Strongly Agree'];
 
   ratingScore: Map<number, string> = new Map<number, string>([
     [1, 'Strongly Disagree'],
@@ -98,9 +88,7 @@ export class OverallWorkExperienceComponent {
   }
 
   overallWorkExperienceForm = new FormGroup({
-    Support_Professional_Development: new FormControl('', [
-      Validators.required,
-    ]),
+    Support_Professional_Development: new FormControl('', [Validators.required]),
     Career_Growth_Opportunities: new FormControl('', [Validators.required]),
     Accomplishment_Recognition: new FormControl('', [Validators.required]),
     Work_Life_Balance_Consideration: new FormControl('', [Validators.required]),
@@ -122,21 +110,17 @@ export class OverallWorkExperienceComponent {
 
   onSubmit(): void {
     if (this.overallWorkExperienceForm.valid) {
+      let experienceData = {} as Experience;
       for (let item of this.formItems) {
         let ratingString =
-          this.overallWorkExperienceForm.value[
-            item.key as keyof typeof this.overallWorkExperienceForm.value
-          ];
-        let ratingNumber = Array.from(this.ratingScore.entries()).find(
-          ([key, value]) => value === ratingString
-        )?.[0];
-        console.log(ratingNumber);
+          this.overallWorkExperienceForm.value[item.key as keyof typeof this.overallWorkExperienceForm.value];
+        let ratingNumber = Array.from(this.ratingScore.entries()).find(([key, value]) => value === ratingString)![0];
+        experienceData[item.key as keyof Experience] = ratingNumber ?? 0;
       }
-
+      let status: Promise<Response> = this.dataBridge.submitOverallWorkResponseForm(experienceData);
       this.router.navigate(['/step3']);
     } else {
       this.hasError = true;
-      console.log('Required filed unfilled - please fill them!');
     }
   }
 }

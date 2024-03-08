@@ -1,44 +1,50 @@
 import { Injectable } from '@angular/core';
-
+import { Reasons } from '../models/reasons';
+import { Experience } from '../models/experience';
+import { Thoughts } from '../models/thoughts';
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class DataBridgeService {
+  constructor() {}
 
-  constructor() { }
+  private readonly backendUrl: string = 'http://127.0.0.1:8000/';
 
-  readonly backendUrl: string = "http://127.0.0.1:8000/"
+  url = this.backendUrl + 'survey/';
 
-  url = this.backendUrl +'survey/';
-
-  async testbackend(){
-    let data = fetch(this.url);
-    return data
+  async submitMainResponseForm(data: Reasons): Promise<Response> {
+    let urlPath: string = this.url + 'mainreasons';
+    let response = await fetch(urlPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return (await response.json()) ?? {};
   }
 
+  async submitOverallWorkResponseForm(data: Experience): Promise<Response> {
+    let urlPath: string = this.url + 'workexperiencemetrics';
+    let response = await fetch(urlPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return (await response.json()) ?? {};
+  }
 
-
-
-
-
-
-  
-  // async getAllHousingLocations(): Promise<Housinglocation[]> {
-  //   const data = await fetch(this.url);
-  //   return (await data.json()) ?? [];
-  // }
-  // async getHousingLocationById(
-  //   id: number
-  // ): Promise<Housinglocation | undefined> {
-  //   const data = await fetch(`${this.url}/${id}`);
-  //   return (await data.json()) ?? {};
-  // }
-
-  // submitApplication(firstName: String, lastName: string, email: string) {
-  //   console.log(
-  //     `Homes application received: firstname: ${firstName}, lastname:${lastName}, email:${email}.`
-  //   );
-  // }
-  
-
+  async submitAdditionalResponseForm(data: Thoughts): Promise<Response> {
+    let urlPath: string = this.url + 'additionalresponse';
+    let response = await fetch(urlPath, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data),
+    });
+    return (await response.json()) ?? {};
+  }
 }

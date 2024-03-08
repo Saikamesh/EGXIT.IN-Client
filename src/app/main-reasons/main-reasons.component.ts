@@ -4,7 +4,8 @@ import { RouterLink } from '@angular/router';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
 import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angular/forms';
-
+import { DataBridgeService } from '../services/data-bridge.service';
+import { Reasons } from '../models/reasons';
 @Component({
   selector: 'app-main-reasons',
   standalone: true,
@@ -13,7 +14,7 @@ import { ReactiveFormsModule, FormGroup, FormControl, Validators } from '@angula
   styleUrl: './main-reasons.component.css',
 })
 export class MainReasonsComponent {
-  constructor(private router: Router, private location: Location) {}
+  constructor(private router: Router, private location: Location, private dataBridge: DataBridgeService) {}
 
   reasons: string[] = [
     'Took another opportunity that was better fit for my skills',
@@ -69,20 +70,17 @@ export class MainReasonsComponent {
 
   onSubmit(): void {
     if (this.mainReasonsForm.valid && (!this.isOther || this.mainReasonsForm.controls.otherPosition.value)) {
-      console.log('Submit working');
-      console.log(typeof this.mainReasonsForm.value.position);
-      console.log(typeof this.selectedReasons);
-      console.log(typeof this.mainReasonsForm.value.additional_reflection);
-
-      console.log(this.mainReasonsForm.value.position);
-      console.log(this.mainReasonsForm.value.additional_reflection);
-      console.log(this.selectedReasons);
+      const reasonData: Reasons = {
+        position: this.isOther
+          ? this.mainReasonsForm.value.otherPosition ?? ''
+          : this.mainReasonsForm.value.position ?? '',
+        influence: this.selectedReasons ?? [],
+        additional_reflection: this.mainReasonsForm.value.additional_reflection ?? '',
+      };
+      let status: Promise<Response> = this.dataBridge.submitMainResponseForm(reasonData);
       this.router.navigate(['/step2']);
     } else {
       this.hasError = true;
-      console.log(this.mainReasonsForm.value); // log the form value
-      console.log(this.mainReasonsForm.controls);
-      console.log('Form is invalid');
     }
   }
 }

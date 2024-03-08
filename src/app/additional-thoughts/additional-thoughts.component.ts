@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { Location, CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angular/forms';
+import { DataBridgeService } from '../services/data-bridge.service';
+import { Thoughts } from '../models/thoughts';
 @Component({
   selector: 'app-additional-thoughts',
   standalone: true,
@@ -10,7 +12,7 @@ import { FormGroup, FormControl, Validators, ReactiveFormsModule } from '@angula
   styleUrl: './additional-thoughts.component.css',
 })
 export class AdditionalThoughtsComponent {
-  constructor(private location: Location, private router: Router) {}
+  constructor(private location: Location, private router: Router, private dataBridge: DataBridgeService) {}
 
   hasError: boolean = false;
   offlineInterview: boolean = true;
@@ -66,10 +68,10 @@ export class AdditionalThoughtsComponent {
     InPersonInterview: new FormControl<string>('', [Validators.required]),
     FullName: new FormControl<string>('', [Validators.pattern('^[a-zA-Z]+(?: [a-zA-Z]+)*$'), Validators.maxLength(50)]),
     Email: new FormControl<string>('', [Validators.email]),
-    Phone: new FormControl<number | null | undefined>(null, [
+    Phone: new FormControl<string>('', [
       Validators.maxLength(10),
       Validators.minLength(10),
-      Validators.pattern('^[0-9]*$'),
+      Validators.pattern('^[0-9]{10}$'),
     ]),
   });
 
@@ -81,16 +83,30 @@ export class AdditionalThoughtsComponent {
           this.additionalThoughtsForm.controls.Email.value &&
           this.additionalThoughtsForm.controls.Phone.value))
     ) {
-      console.log(this.additionalThoughtsForm.value.WorkExpDesc);
-      console.log(this.additionalThoughtsForm.value.CollegeExpDesc);
-      console.log(this.additionalThoughtsForm.value.InPersonInterview);
-      console.log(this.additionalThoughtsForm.value.FullName);
-      console.log(this.additionalThoughtsForm.value.Email);
-      console.log(this.additionalThoughtsForm.value.Phone);
+      let thoughtsData = {} as Thoughts;
+      if (!this.offlineInterview) {
+        thoughtsData = {
+          WorkExpDesc: this.additionalThoughtsForm.value.WorkExpDesc ?? '',
+          CollegeExpDesc: this.additionalThoughtsForm.value.CollegeExpDesc ?? '',
+          InPersonInterview: this.additionalThoughtsForm.value.InPersonInterview ?? '',
+          FullName: this.additionalThoughtsForm.value.FullName ?? '',
+          Email: this.additionalThoughtsForm.value.Email ?? '',
+          Phone: this.additionalThoughtsForm.value.Phone ?? '',
+        };
+      } else {
+        thoughtsData = {
+          WorkExpDesc: this.additionalThoughtsForm.value.WorkExpDesc ?? '',
+          CollegeExpDesc: this.additionalThoughtsForm.value.CollegeExpDesc ?? '',
+          InPersonInterview: this.additionalThoughtsForm.value.InPersonInterview ?? '',
+          FullName: '',
+          Email: '',
+          Phone: '',
+        };
+      }
+      let status: Promise<Response> = this.dataBridge.submitAdditionalResponseForm(thoughtsData);
       this.router.navigate(['/completed']);
     } else {
       this.hasError = true;
-      console.log('Form is invalid');
     }
   }
 }
