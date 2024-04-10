@@ -4,6 +4,7 @@ import { HomeComponent } from './home/home.component';
 import { OverallWorkExperienceComponent } from './overall-work-experience/overall-work-experience.component';
 import { AdditionalThoughtsComponent } from './additional-thoughts/additional-thoughts.component';
 import { ThankyouComponent } from './thankyou/thankyou.component';
+import { InsightsComponent } from './insights/insights.component';
 
 export const routes: Routes = [
   {
@@ -35,5 +36,10 @@ export const routes: Routes = [
     path: 'completed',
     component: ThankyouComponent,
     title: 'Thank You!',
+  },
+  {
+    path: 'insights',
+    component: InsightsComponent,
+    title: 'Insights',
   },
 ];

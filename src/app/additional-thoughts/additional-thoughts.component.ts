@@ -63,8 +63,8 @@ export class AdditionalThoughtsComponent {
   }
 
   additionalThoughtsForm = new FormGroup({
-    WorkExpDesc: new FormControl<string>('', [Validators.pattern('^[a-zA-Z0-9 ]*$')]),
-    CollegeExpDesc: new FormControl<string>('', [Validators.pattern('^[a-zA-Z0-9 ]*$')]),
+    WorkExpDesc: new FormControl<string>('', [Validators.pattern('^[a-zA-Z0-9 ,.]*$')]),
+    CollegeExpDesc: new FormControl<string>('', [Validators.pattern('^[a-zA-Z0-9 ,.]*$')]),
     InPersonInterview: new FormControl<string>('', [Validators.required]),
     FullName: new FormControl<string>('', [Validators.pattern('^[a-zA-Z]+(?: [a-zA-Z]+)*$'), Validators.maxLength(50)]),
     Email: new FormControl<string>('', [Validators.email]),

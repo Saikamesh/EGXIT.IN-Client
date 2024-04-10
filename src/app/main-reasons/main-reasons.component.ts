@@ -56,7 +56,7 @@ export class MainReasonsComponent {
     position: new FormControl('', [Validators.required]),
     otherPosition: new FormControl('', [Validators.maxLength(30), Validators.pattern('^[a-zA-Z]+(?: [a-zA-Z]+)*$')]),
     influence: new FormControl('', [Validators.required]),
-    additional_reflection: new FormControl('', [Validators.pattern('^[a-zA-Z0-9 ]*$')]),
+    additional_reflection: new FormControl('', [Validators.pattern('^[a-zA-Z0-9 ,.]*$')]),
   });
 
   getValues(rs: { reason: string }) {

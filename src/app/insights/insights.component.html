@@ -1,0 +1,101 @@
+<div class="px-2 max-w-full m-10">
+  <div class="text-center my-8 mx-8 p-2">
+    <div class="border-black inline-flex rounded-md shadow-sm" role="group">
+      <button
+        type="button"
+        class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+        (click)="loadReasonsChart()"
+      >
+        Reasons
+      </button>
+      <button
+        type="button"
+        class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border-t border-b border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+        (click)="loadAggregatedMetricsChart()"
+      >
+        Aggregated Metrics
+      </button>
+      <button
+        type="button"
+        class="px-4 py-2 text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-e-lg hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700"
+        (click)="loadIndividualMetricChart()"
+      >
+        Individual Metric Scores
+      </button>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 min-h-dvh">
+    <div class="">
+      <canvas id="chart"></canvas>
+    </div>
+    @if(isReasons){
+    <div class="m-5 flex-auto">
+      <div class="my-5 place-content-start">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase">
+            <tr>
+              <th class="px-6 py-3 bg-gray-50">Reason</th>
+              <th class="px-6 py-3">Count</th>
+            </tr>
+          </thead>
+          @for(influence of topInfluences ; track influence){
+          <tbody>
+            <tr>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+                {{ influence[0] }}
+              </td>
+              <td class="px-6 py-4">
+                {{ influence[1] }}
+              </td>
+            </tr>
+          </tbody>
+          }
+        </table>
+      </div>
+    </div>
+    } @if(isMetrics){
+    <div class="m-5 flex-auto">
+      <div class="my-5 place-content-start">
+        <table class="w-full text-sm text-left rtl:text-right text-gray-500">
+          <thead class="text-xs text-gray-700 uppercase">
+            <tr>
+              <th class="px-6 py-3 bg-gray-50">Metric Name</th>
+              <th class="px-6 py-3">Count</th>
+            </tr>
+          </thead>
+          @for(metrik of workMetrics ; track metrik){
+          <tbody>
+            <tr>
+              <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap bg-gray-50">
+                {{ metrik[0] }}
+              </td>
+              <td class="px-6 py-4">
+                {{ metrik[1] }}
+              </td>
+            </tr>
+          </tbody>
+          }
+        </table>
+      </div>
+    </div>
+    } @if(isIndividualMetric){
+    <div class="m-5 text-center">
+      @if(metricLabels){
+      <label for="selectedMetric" class="block mb-2 text-sm font-medium text-gray-900">Choose a Metric</label>
+      <br />
+      <select
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        name="selectedMetric"
+        id="selectedMetric"
+        (change)="onMetricChange($event)"
+      >
+        @for(metric of metricLabels ; track metric ){
+        <option [value]="metric">{{ metric }}</option>
+        }
+      </select>
+      }
+    </div>
+    }
+  </div>
+</div>
